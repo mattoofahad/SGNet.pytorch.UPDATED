@@ -10,9 +10,9 @@ def parse_base_args():
     parser.add_argument('--num_workers', default=8, type=int)
     parser.add_argument('--epochs', default=50, type=int)
 
-    parser.add_argument('--steps_per_epoch', default=500, type=int)
+    parser.add_argument('--steps_per_epoch', default=-1, type=int)
     parser.add_argument('--steps_validation', default=-1, type=int)
-    parser.add_argument('--steps_testing', default=200, type=int)
+    parser.add_argument('--steps_testing', default=-1, type=int)
 
     parser.add_argument('--batch_size', default=128, type=int)
     parser.add_argument('--weight_decay', default=5e-04, type=float)

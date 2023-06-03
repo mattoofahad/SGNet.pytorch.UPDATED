@@ -67,6 +67,14 @@ def main(args):
         train_goal_loss, train_cvae_loss, train_KLD_loss = train(model, train_gen, criterion, optimizer, device, args.steps_per_epoch)        
         print('Goal loss: {:.4f}\t CVAE loss: {:.4f}\t KLD loss: {:.4f}\n'.format(train_goal_loss, train_cvae_loss, train_KLD_loss))
 
+        torch.save({
+            'epoch': epoch,
+            'model_state_dict': model.state_dict(),
+            'optimizer_state_dict': optimizer.state_dict(),
+            'loss': train_goal_loss + train_cvae_loss + train_KLD_loss,
+            }, 
+            'checkpoints/model.pt')
+
         # val
         print('************************************\tValidation\t************************************')
         val_loss = val(model, val_gen, criterion, device, args.steps_validation)
