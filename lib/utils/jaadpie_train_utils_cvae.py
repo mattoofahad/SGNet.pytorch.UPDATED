@@ -49,7 +49,7 @@ def train(model, train_gen, criterion, optimizer, device, steps_per_epoch):
     
     return total_goal_loss, total_cvae_loss, total_KLD_loss
 
-def val(model, val_gen, criterion, device):
+def val(model, val_gen, criterion, device, steps_validation):
     total_goal_loss = 0
     total_cvae_loss = 0
     total_KLD_loss = 0
@@ -72,11 +72,14 @@ def val(model, val_gen, criterion, device):
             total_cvae_loss += cvae_loss.item()* batch_size
             total_KLD_loss += KLD_loss.mean()* batch_size
 
+            if batch_idx == steps_validation:
+                break
+
     val_loss = total_goal_loss/len(val_gen.dataset)\
          + total_cvae_loss/len(val_gen.dataset) + total_KLD_loss/len(val_gen.dataset)
     return val_loss
 
-def test(model, test_gen, criterion, device):
+def test(model, test_gen, criterion, device, steps_testing):
     total_goal_loss = 0
     total_cvae_loss = 0
     total_KLD_loss = 0
@@ -118,6 +121,9 @@ def test(model, test_gen, criterion, device):
             CMSE += batch_CMSE
             CFMSE += batch_CFMSE
             FIOU += batch_FIOU
+
+            if batch_idx == steps_testing:
+                break
             
 
     

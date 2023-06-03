@@ -69,12 +69,12 @@ def main(args):
 
 
         # val
-        val_loss = val(model, val_gen, criterion, device)
+        val_loss = val(model, val_gen, criterion, device, args.steps_validation)
         lr_scheduler.step(val_loss)
 
 
         # test
-        test_loss, MSE_15, MSE_05, MSE_10, FMSE, FIOU, CMSE, CFMSE = test(model, test_gen, criterion, device)
+        test_loss, MSE_15, MSE_05, MSE_10, FMSE, FIOU, CMSE, CFMSE = test(model, test_gen, criterion, device, args.steps_testing)
         print("Test Loss: {:.4f}".format(test_loss))
         print("MSE_05: %4f;  MSE_10: %4f;  MSE_15: %4f\n" % (MSE_05, MSE_10, MSE_15))
 
