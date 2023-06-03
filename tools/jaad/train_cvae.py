@@ -61,7 +61,7 @@ def main(args):
         print("Number of training samples:", len(train_gen))
 
         # train
-        train_goal_loss, train_cvae_loss, train_KLD_loss = train(model, train_gen, criterion, optimizer, device)
+        train_goal_loss, train_cvae_loss, train_KLD_loss = train(model, train_gen, criterion, optimizer, device, args.steps_per_epoch)
         # print('Train Epoch: ', epoch, 'Goal loss: ', train_goal_loss, 'Decoder loss: ', train_dec_loss, 'CVAE loss: ', train_cvae_loss, \
         #     'KLD loss: ', train_KLD_loss, 'Total: ', total_train_loss) 
         print('Train Epoch: {} \t Goal loss: {:.4f}\t CVAE loss: {:.4f}\t KLD loss: {:.4f}'.format(

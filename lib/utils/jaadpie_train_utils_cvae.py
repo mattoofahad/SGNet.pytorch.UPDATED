@@ -13,7 +13,7 @@ from torch.utils import data
 from lib.utils.eval_utils import eval_jaad_pie, eval_jaad_pie_cvae
 from lib.losses import cvae, cvae_multi
 
-def train(model, train_gen, criterion, optimizer, device):
+def train(model, train_gen, criterion, optimizer, device, steps_per_epoch):
     model.train() # Sets the module in training mode.
     total_goal_loss = 0
     total_cvae_loss = 0
@@ -39,6 +39,9 @@ def train(model, train_gen, criterion, optimizer, device):
             optimizer.zero_grad()
             train_loss.backward()
             optimizer.step()
+
+            if batch_idx == steps_per_epoch:
+                break
         
     total_goal_loss /= len(train_gen.dataset)
     total_cvae_loss/=len(train_gen.dataset)
