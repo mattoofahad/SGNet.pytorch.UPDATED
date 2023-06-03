@@ -61,22 +61,25 @@ def main(args):
 
         # print("Number of training samples:", len(train_gen))
 
+        print('\n                                    \tEpoch {}\t                                       \n'.format(epoch))
         # train
-        print('\n\nTrain Epoch: {}'.format(epoch))
-        train_goal_loss, train_cvae_loss, train_KLD_loss = train(model, train_gen, criterion, optimizer, device, args.steps_per_epoch)
-        # print('Train Epoch: ', epoch, 'Goal loss: ', train_goal_loss, 'Decoder loss: ', train_dec_loss, 'CVAE loss: ', train_cvae_loss, \
-        #     'KLD loss: ', train_KLD_loss, 'Total: ', total_train_loss)         
+        print('************************************\tTraining\t**************************************')
+        train_goal_loss, train_cvae_loss, train_KLD_loss = train(model, train_gen, criterion, optimizer, device, args.steps_per_epoch)        
         print('Goal loss: {:.4f}\t CVAE loss: {:.4f}\t KLD loss: {:.4f}\n'.format(train_goal_loss, train_cvae_loss, train_KLD_loss))
 
         # val
+        print('************************************\tValidation\t************************************')
         val_loss = val(model, val_gen, criterion, device, args.steps_validation)
         print("Validation Loss: {:.4f}\n".format(val_loss))
         lr_scheduler.step(val_loss)
 
         # test
+        print('************************************\tTesting\t***************************************')
         test_loss, MSE_15, MSE_05, MSE_10, FMSE, FIOU, CMSE, CFMSE = test(model, test_gen, criterion, device, args.steps_testing)
         print("Test Loss: {:.4f}".format(test_loss))
         print("MSE_05: %4f;  MSE_10: %4f;  MSE_15: %4f\n" % (MSE_05, MSE_10, MSE_15))
+
+        # print('\n************************************Epoch {} End************************************\n'.format(epoch))
 
 
 
