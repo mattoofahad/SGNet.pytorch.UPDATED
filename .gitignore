@@ -6,8 +6,8 @@
 *.err
 *.script
 
+checkpoints/
 data/*
-checkpoints/*
 =======
 data/PIE
 data/JAAD
