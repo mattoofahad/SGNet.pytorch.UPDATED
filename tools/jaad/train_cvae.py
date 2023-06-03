@@ -58,20 +58,20 @@ def main(args):
     best_model_metric = None
 
     for epoch in range(args.start_epoch, args.epochs+args.start_epoch):
-        print("Number of training samples:", len(train_gen))
+
+        # print("Number of training samples:", len(train_gen))
 
         # train
+        print('\n\nTrain Epoch: {}'.format(epoch))
         train_goal_loss, train_cvae_loss, train_KLD_loss = train(model, train_gen, criterion, optimizer, device, args.steps_per_epoch)
         # print('Train Epoch: ', epoch, 'Goal loss: ', train_goal_loss, 'Decoder loss: ', train_dec_loss, 'CVAE loss: ', train_cvae_loss, \
-        #     'KLD loss: ', train_KLD_loss, 'Total: ', total_train_loss) 
-        print('Train Epoch: {} \t Goal loss: {:.4f}\t CVAE loss: {:.4f}\t KLD loss: {:.4f}'.format(
-                epoch, train_goal_loss, train_cvae_loss, train_KLD_loss))
-
+        #     'KLD loss: ', train_KLD_loss, 'Total: ', total_train_loss)         
+        print('Goal loss: {:.4f}\t CVAE loss: {:.4f}\t KLD loss: {:.4f}\n'.format(train_goal_loss, train_cvae_loss, train_KLD_loss))
 
         # val
         val_loss = val(model, val_gen, criterion, device, args.steps_validation)
+        print("Validation Loss: {:.4f}\n".format(val_loss))
         lr_scheduler.step(val_loss)
-
 
         # test
         test_loss, MSE_15, MSE_05, MSE_10, FMSE, FIOU, CMSE, CFMSE = test(model, test_gen, criterion, device, args.steps_testing)
