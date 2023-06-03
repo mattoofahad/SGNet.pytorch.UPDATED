@@ -7,6 +7,7 @@
 *.script
 
 data/*
+checkpoints/*
 =======
 data/PIE
 data/JAAD
